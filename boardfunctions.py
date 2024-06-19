@@ -546,3 +546,117 @@ def pinAxis(src, kingPos, gameConfig, colour, opp_colour):
 
 
 
+
+
+def checkBlockers(kingPos, gameConfig, axis, colour, opp_colour):
+
+	def pawnBlocker(square, gameConfig, colour, opp_colour):
+
+		# If the square in the axis is empty
+		if gameConfig[square[0]][square[1]] == '--':
+
+			# If there is a pawn 1 or 2 spaces behind that can block the check
+			if (square[0] < len(gameConfig)-1 and gameConfig[square[0]+1][square[1]]) == f'{colour}p' or (square[0] == 4 and gameConfig[square[0]+2][square[1]] == f'{colour}p'):
+
+				return True
+
+		# If the pawn is able to capture the checking piece
+		elif gameConfig[square[0]][square[1]][0] == opp_colour:
+
+			if (square[0] < len(gameConfig) and square[1] > 0 and gameConfig[square[0]+1][square[1]-1] == f'{colour}p') or (square[0] < len(gameConfig) and square[1] < len(gameConfig)-1 and gameConfig[square[0]+1][square[1]+1] == f'{colour}p'):
+
+				return True
+
+		return False
+
+	def knightBlocker(square, gameConfig, colour, opp_colour):
+
+		offsets = [-2,-1,1,2]
+		directions = list(itertools.product(offsets, repeat=2))
+		directions = list(filter(lambda a: abs(a[0]) != abs(a[1]), directions))
+
+		for direction in directions:
+
+			if square[0] + direction[0] < 0 or square[0] + direction[0] >= len(gameConfig) or \
+			   square[1] + direction[1] < 0 or square[1] + direction[1] >= len(gameConfig):
+			   continue
+
+			elif gameConfig[square[0] + direction[0]][square[1] + direction[1]] == f'{colour}n':
+
+				return True
+
+		return False
+
+	def diagBlocker(square, gameConfig, colour, opp_colour):
+
+		directions = [[-1,1], [1,1], [1,-1], [-1,-1]]
+
+		def diagPathFinder(square, direction, gameConfig, colour, opp_colour):
+
+			if square[0] + direction[0] < 0 or square[0] + direction[0] >=len(gameConfig) or \
+			   square[1] + direction[1] < 0 or square[1] + direction[1] >=len(gameConfig) or \
+			   gameConfig[square[0] + direction[0]][square[1] + direction[1]][0] == opp_colour:
+			   return False
+
+			else:
+
+				if gameConfig[square[0] + direction[0]][square[1] + direction[1]] == f'{colour}q' or \
+				   gameConfig[square[0] + direction[0]][square[1] + direction[1]] == f'{colour}b':
+
+					return True
+
+				elif gameConfig[square[0] + direction[0]][square[1] + direction[1]] == '--':
+
+					return diagPathFinder([square[0] + direction[0],square[1] + direction[1]], direction, gameConfig, colour, opp_colour)
+
+				else:
+
+					return False
+
+		for direction in directions:
+			orig = copy.deepcopy(square)
+			if diagPathFinder(orig, direction, gameConfig, colour, opp_colour):
+				return True
+
+		return False
+
+	def straightBlocker(square, gameConfig, colour, opp_colour):
+
+		directions = [[-1,0], [1,0], [0,-1], [0,1]]
+
+		def straightPathFinder(square, direction, gameConfig, colour, opp_colour):
+
+			if square[0] + direction[0] < 0 or square[0] + direction[0] >=len(gameConfig) or \
+			   square[1] + direction[1] < 0 or square[1] + direction[1] >=len(gameConfig) or \
+			   gameConfig[square[0] + direction[0]][square[1] + direction[1]][0] == opp_colour:
+			   return False
+
+			else:
+
+				if gameConfig[square[0] + direction[0]][square[1] + direction[1]] == f'{colour}q' or \
+				   gameConfig[square[0] + direction[0]][square[1] + direction[1]] == f'{colour}r':
+
+					return True
+
+				elif gameConfig[square[0] + direction[0]][square[1] + direction[1]] == '--':
+
+					return straightPathFinder([square[0] + direction[0],square[1] + direction[1]], direction, gameConfig, colour, opp_colour)
+
+				else:
+
+					return False
+
+		for direction in directions:
+			orig = copy.deepcopy(square)
+			if straightPathFinder(orig, direction, gameConfig, colour, opp_colour):
+				return True
+
+		return False
+
+	for square in axis:
+
+		if pawnBlocker(square, gameConfig, colour, opp_colour) or knightBlocker(square, gameConfig, colour, opp_colour) or \
+		   diagBlocker(square, gameConfig, colour, opp_colour) or straightBlocker(square, gameConfig, colour, opp_colour):
+		   return True
+
+	return False
