@@ -4,6 +4,15 @@
 
 I came across network programming in my job, and I was fascinated by how it worked. Given my passion for chess, I decided to make a networked chess game to play with a friend. The game starts with a basic Tkinter entry widget to get the player's alias, and the rest of the game uses the Pygame module in Python. 
 
+# Program Files
+
+1. server.py - Server that handles all communication between clients, as well as assigning of player colours
+2. client.py - Client that recieves and sends messages to server in JSON format
+3. chessboard.py - Responsible for the graphical aspects of the game. Draws the chessboard and pieces, and notifies both players when a king is under check, as well as sound effects.
+4. move.py - Updates the 2D array which represents the board configuration after a move has been made
+5. boardfunctions.py - Contains all the game logic, namely calculating the square coordinates based on the location of mouse click, and all movement logic related to every piece, pins, checks, etc.
+6. protocols.py - Defines events that each player communicates to the other, such as check, checkmate, stalemate, disconnect, etc
+
 # How it works
 
 1. One player has to first run server.py
@@ -22,5 +31,7 @@ I came across network programming in my job, and I was fascinated by how it work
 
 1. Castling, pawn promotion and en passant
 2. Functionality to undo moves
-3. An embedded chatroom for the players to communicate
-4. The server to shut down properly when both players have left
+3. Functionality to resign and notify opponent
+4. An embedded chatroom for the players to communicate
+5. The server to shut down properly when both players have left
+6. Reduce boilerplate in main.py and boardfunctions.py
