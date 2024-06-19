@@ -3,8 +3,8 @@ import itertools
 
 pygame.font.init()
 pygame.mixer.init()
-move = pygame.mixer.Sound('movesound.mp3')
-capture = pygame.mixer.Sound('capturesound.mp3')
+move = pygame.mixer.Sound('ImagesSounds/movesound.mp3')
+capture = pygame.mixer.Sound('ImagesSounds/capturesound.mp3')
 font = pygame.font.SysFont('Times', 50)
 font_opp = pygame.font.SysFont('Times', 50)
 
@@ -51,7 +51,7 @@ class ChessBoard:
 				
 				# Draw pieces
 				if currentState != '--':
-					piece = pygame.image.load(f'{currentState}.png').convert_alpha()
+					piece = pygame.image.load(f'ImagesSounds/{currentState}.png').convert_alpha()
 					piece = pygame.transform.scale(piece, (self.length, self.length))
 					screen.blit(piece, pygame.Rect(self.spacing + (self.length * r), 
 												   self.spacing + (self.length * c), 
@@ -79,7 +79,7 @@ class ChessBoard:
 				# screen.blit(opponent_nametag, (200,600))
 
 				# Draw undo button
-				undo = pygame.image.load('undo.png').convert_alpha()
+				undo = pygame.image.load('ImagesSounds/undo.png').convert_alpha()
 				undo = pygame.transform.scale(undo, (20,20))
 				self.undo_rect = undo.get_rect(topleft = (715, 755))
 				screen.blit(undo, self.undo_rect)
