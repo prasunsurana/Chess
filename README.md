@@ -11,7 +11,8 @@ I came across network programming in my job, and I was fascinated by how it work
 3. chessboard.py - Responsible for the graphical aspects of the game. Draws the chessboard and pieces, and notifies both players when a king is under check, as well as sound effects.
 4. move.py - Updates the 2D array which represents the board configuration after a move has been made
 5. boardfunctions.py - Contains all the game logic, namely calculating the square coordinates based on the location of mouse click, and all movement logic related to every piece, pins, checks, etc.
-6. protocols.py - Defines events that each player communicates to the other, such as check, checkmate, stalemate, disconnect, etc
+6. main.py - Responsible for both the Tkinter entry widget and Pygame game loops. Handles all mouse events and information relating to each player, such as their client socket, game-specific information (e.g colour, position of their king, etc) and more.
+7. protocols.py - Defines events that each player communicates to the other, such as check, checkmate, stalemate, disconnect, etc
 
 # How it works
 
