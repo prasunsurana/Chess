@@ -16,7 +16,7 @@ I came across network programming in my job, and I was fascinated by how it work
 
 # How it works
 
-1. One player has to first run server.py
+1. One player has to first run server.py (IP Addresses have to be updated in the source code)
 2. Both players can then run main.py, which will spawn a Tkinter entry widget
 3. The main.py file imports the client.py file and establishes a connection with the server once they have entered their alias.
 4. Once the player aliases have been exchanged by the server, the Tkinter widget is killed and the pygame loop starts, displaying the chessboard.
