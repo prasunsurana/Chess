@@ -36,3 +36,4 @@ I came across network programming in my job, and I was fascinated by how it work
 4. An embedded chatroom for the players to communicate
 5. The server to shut down properly when both players have left
 6. Reduce boilerplate in main.py and boardfunctions.py
+7. Clean up the code to avoid nested conditionals and lengthy functions
