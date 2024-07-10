@@ -223,9 +223,10 @@ class Player:
 
 						if self.check:
 
-							# add function for no defenders available here, and sending checkmate protocol is conditioned on that
-							self.client.json_convert_send({Protocols.CHECKMATE:None})
-							self.messageArg = Protocols.CHECKMATE
+							if len(self.axisSquares) > 1 or not checkBlockers(self.king, self.gameConfig, self.axisSquares[0], self.colour, self.opponent_colour):
+								
+								self.client.json_convert_send({Protocols.CHECKMATE:None})
+								self.messageArg = Protocols.CHECKMATE
 
 						else: 
 
